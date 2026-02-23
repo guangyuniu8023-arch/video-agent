@@ -2,6 +2,8 @@
 
 LLM Router + 3 Agent (Planner/Producer/Editor) 架构，基于 LangGraph 编排。
 
+> 📁 开发进度与 Plan 文档见 [progress/](progress/)
+
 ## 快速开始
 
 ### 1. 启动基础设施
