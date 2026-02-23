@@ -26,10 +26,9 @@ cd backend && python scripts/regression_test.py
 ```
 
 ## Plan 文档位置
-- 主 Plan: `~/.cursor/plans/视频生成agent系统_1d7d83ac.plan.md`
-- 编排器 Plan: `~/.cursor/plans/n8n_风格节点编排器_0fb856c6.plan.md`
-- 模块化重构 Plan: `~/.cursor/plans/画布模块化重构_a1b2c3d4.plan.md`
-- Skill 自包含 Plan: `~/.cursor/plans/skill_自动注册+代码可见_c9188aab.plan.md`
+- 主 Plan: `progress/plans/01_主Plan_视频生成Agent系统.md`
+- 前端 Plan: `progress/plans/02_前端Plan.md`
+- 后端 Plan: `progress/plans/03_后端Plan.md`
 - 开发规范 Skill: `~/.cursor/skills/feature-development/SKILL.md`
 
 ---
