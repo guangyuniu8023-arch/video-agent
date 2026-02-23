@@ -10,7 +10,7 @@
 | mcp_servers | MCP 服务 | id, transport, url, status, discovered_tools |
 | workflow_versions | 版本快照 | version, is_published, snapshot (JSON) |
 | prompt_versions | Prompt 历史 | agent_id, version, system_prompt, is_active |
-| routing_rules | 路由规则 | name, target_type, match_description, priority, enabled |
+| routing_rules | 路由规则 | name, target_type, target_skill, skip_agents, match_description, priority, enabled |
 
 ### canvas_nodes 关键字段
 
@@ -21,13 +21,14 @@
 
 ## 二、画布 API (canvas.py)
 
-### 2.1 端点
+### 2.1 端点 (前缀 /api/admin)
 
-- `GET/POST /admin/canvas/nodes` — 列表/创建
-- `PUT/DELETE /admin/canvas/nodes/{id}` — 更新/删除
-- `PUT /admin/canvas/nodes/{id}/config` — 更新容器 config
-- `POST /admin/canvas/edges` — 创建边
-- `DELETE /admin/canvas/edges/{id}` — 删除边
+- `GET/POST /api/admin/canvas/nodes` — 列表/创建
+- `PUT/DELETE /api/admin/canvas/nodes/{id}` — 更新/删除
+- `PUT /api/admin/canvas/nodes/{id}/config` — 更新容器 config
+- `PUT /api/admin/canvas/nodes/batch-positions` — 批量更新位置
+- `POST /api/admin/canvas/edges` — 创建边
+- `DELETE /api/admin/canvas/edges/{id}` — 删除边
 
 ### 2.2 连线副作用
 
@@ -144,10 +145,16 @@ def _wrap_sub_agent(self, sub_config, parent_state):
 - LLM 对话生成 Skill 定义
 - 保存到文件系统
 
-### 6.4 版本管理 (publish.py)
+### 6.4 版本管理 (publish.py, 前缀 /api/v1)
 
-- 保存/发布/加载/删除版本
-- 快照: canvas_nodes + canvas_edges + agent_configs (仅画布上的 Agent)
+- `POST /save` — 保存当前画布（有发布版本则更新，否则存为 _draft）
+- `POST /publish` — 发布新版本
+- `GET /versions` — 版本列表
+- `GET /versions/{id}` — 获取版本详情
+- `POST /versions/{id}/load` — 加载版本到画布
+- `DELETE /versions/{id}` — 删除版本
+
+**快照内容**: canvas_nodes 含 id, node_type, ref_id, position_x, position_y, config, parent_canvas；canvas_edges 含 source_id, target_id, edge_type；agent_configs 含 id, name, description, agent_type, parent_id, system_prompt, available_tools, llm_config, execution_mode, bypass, enabled（仅画布上存在的 Agent）。
 
 ### 6.5 Video API (video_api.py)
 

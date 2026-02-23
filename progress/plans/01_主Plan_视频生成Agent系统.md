@@ -141,9 +141,11 @@
 
 ### 6.3 版本管理
 
-- `POST /api/v1/publish` — 发布版本
+- `POST /api/v1/save` — 保存当前画布（有发布版本则更新，否则存为草稿 _draft）
+- `POST /api/v1/publish` — 发布新版本
 - `GET /api/v1/versions` — 版本列表
 - `POST /api/v1/versions/{id}/load` — 加载版本到画布
+- `DELETE /api/v1/versions/{id}` — 删除版本
 
 ---
 

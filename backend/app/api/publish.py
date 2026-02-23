@@ -27,7 +27,9 @@ async def _take_snapshot(session) -> dict:
     return {
         "canvas_nodes": [
             {"id": n.id, "node_type": n.node_type, "ref_id": n.ref_id,
-             "position_x": n.position_x, "position_y": n.position_y}
+             "position_x": n.position_x, "position_y": n.position_y,
+             "config": getattr(n, "config", None) or {},
+             "parent_canvas": getattr(n, "parent_canvas", None)}
             for n in nodes
         ],
         "canvas_edges": [
@@ -195,6 +197,8 @@ async def load_version(version_id: int):
             session.add(CanvasNode(
                 id=n["id"], node_type=n["node_type"], ref_id=n["ref_id"],
                 position_x=n["position_x"], position_y=n["position_y"],
+                config=n.get("config", {}),
+                parent_canvas=n.get("parent_canvas"),
             ))
 
         for e in snapshot.get("canvas_edges", []):
